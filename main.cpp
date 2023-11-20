@@ -1,6 +1,6 @@
 #include <iostream>
 #include <random>
-
+#include <fstream>
 
 using namespace std;
 
@@ -37,10 +37,13 @@ void simulate(int iterations){
   int swappc = 0, wins = 0, losses = 0, total = 0;
   int door1 = 0, door1pc = 1, door2 = 0, door2pc = 2, door3 = 0, door3pc = 3, input = 1;
   double ratio = 0;
-
+  ifstream fin;
+  ofstream fout;
+  
   cout << "Stay or swap? 0 to stay, 1 to swap: ";
   cin >> swappc;
-
+  fout.open("Results.txt");
+  
   for(int x = 0; x < iterations; x++){
     bool Result = false;
     random_device rd;
@@ -99,6 +102,8 @@ void simulate(int iterations){
       else if(input == door3pc && door3 == 1)
 	Result = true;
     }
+
+    fout << Result << "\n";
     
     total++;
     if(Result == true)
@@ -110,6 +115,7 @@ void simulate(int iterations){
 
   cout << "Total runs: " << total << "\nTotal wins: " << wins
        << "\nTotal losses: " << losses << "\nRatio of wins to total played: " << ratio << "\n";
+  fout.close();
 }
 bool monty_hall(){
   
